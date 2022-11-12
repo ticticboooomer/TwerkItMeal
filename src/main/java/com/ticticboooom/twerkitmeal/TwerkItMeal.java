@@ -19,7 +19,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,7 +26,6 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.commons.lang3.tuple.Pair;
 
 
 @Mod(TwerkItMeal.MOD_ID)
@@ -35,17 +33,8 @@ public class TwerkItMeal {
 
   public static final String MOD_ID = "twerkitmeal";
 
-  static final ForgeConfigSpec SPEC;
-  public static final Config CONFIG;
-
-  static {
-    final Pair<Config, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Config::new);
-    SPEC = specPair.getRight();
-    CONFIG = specPair.getLeft();
-  }
-
   public TwerkItMeal() {
-    ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SPEC, "twerk-config.toml");
+    ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC, "twerk-config.toml");
     MinecraftForge.EVENT_BUS.register(new RegistryEvents());
   }
 
@@ -64,7 +53,7 @@ public class TwerkItMeal {
       UUID uuid = event.player.getUUID();
 
       ServerLevel world = (ServerLevel) event.player.level;
-      if (event.player.isSprinting() && world.getRandom().nextDouble() <= CONFIG.sprintGrowChance()) {
+      if (event.player.isSprinting() && world.getRandom().nextDouble() <= Config.COMMON.sprintGrowChance()) {
         triggerGrowth(event, uuid);
       }
     }
@@ -98,8 +87,8 @@ public class TwerkItMeal {
       crouchCount.put(uuid, ++playerCrouchCount);
 
       ServerLevel world = (ServerLevel) event.player.level;
-      boolean hasCrouchedEnough = playerCrouchCount >= CONFIG.minCrouchesToApplyBonemeal();
-      boolean hasPassedDiceRoll = world.getRandom().nextDouble() <= CONFIG.crouchGrowChance();
+      boolean hasCrouchedEnough = playerCrouchCount >= Config.COMMON.minCrouchesToApplyBonemeal();
+      boolean hasPassedDiceRoll = world.getRandom().nextDouble() <= Config.COMMON.crouchGrowChance();
       if (hasCrouchedEnough && hasPassedDiceRoll) {
         triggerGrowth(event, uuid);
       }
@@ -116,7 +105,7 @@ public class TwerkItMeal {
         }
 
         boolean isSapling = ForgeRegistries.BLOCKS.tags().getTag(BlockTags.SAPLINGS).contains(blockState.getBlock());
-        if (CONFIG.saplingsOnly() && !isSapling) {
+        if (Config.COMMON.saplingsOnly() && !isSapling) {
           continue;
         }
 
@@ -126,7 +115,7 @@ public class TwerkItMeal {
           BoneMealItem.applyBonemeal(new ItemStack(Items.BONE_MEAL), level, growablePos, event.player);
         }
 
-        if (!CONFIG.showParticles()) {
+        if (!Config.COMMON.showParticles()) {
           return;
         }
 
@@ -139,7 +128,7 @@ public class TwerkItMeal {
 
     private List<BlockPos> getNearestBlocks(Level world, BlockPos pos) {
       List<BlockPos> list = new ArrayList<>();
-      int radius = CONFIG.effectRadius();
+      int radius = Config.COMMON.effectRadius();
       for (int x = -radius; x <= radius; x++) {
         for (int y = -2; y <= 2; y++) {
           for (int z = -radius; z <= radius; z++) {

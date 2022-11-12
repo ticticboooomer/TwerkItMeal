@@ -1,6 +1,6 @@
 package com.ticticboooom.twerkitmeal.helper;
 
-import static com.ticticboooom.twerkitmeal.TwerkItMeal.CONFIG;
+import static com.ticticboooom.twerkitmeal.config.Config.COMMON;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class FilterListHelper {
   }
 
   public static boolean shouldAllow(String key) {
-    if (CONFIG.getBlacklist().isEmpty()) {
+    if (COMMON.getBlacklist().isEmpty()) {
       return true;
     }
 
@@ -23,17 +23,17 @@ public class FilterListHelper {
     variations.add(key);
     // mod id from RL of block
     variations.add(key.substring(0, key.indexOf(":")));
-    for (String listed : CONFIG.getBlacklist()) {
+    for (String listed : COMMON.getBlacklist()) {
       if (variations.contains(listed)) {
         return false;
       }
     }
 
-    if (!CONFIG.useWhitelist()) {
+    if (!COMMON.useWhitelist()) {
       return true;
     }
 
-    for (String listed : CONFIG.getWhitelist()) {
+    for (String listed : COMMON.getWhitelist()) {
       if (variations.contains(listed)) {
         return true;
       }

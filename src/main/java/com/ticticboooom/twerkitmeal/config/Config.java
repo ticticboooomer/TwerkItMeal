@@ -4,9 +4,18 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class Config {
 
+  public static final ForgeConfigSpec SPEC;
+  public static final Config COMMON;
+
+  static {
+    final Pair<Config, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Config::new);
+    SPEC = specPair.getRight();
+    COMMON = specPair.getLeft();
+  }
   public final ForgeConfigSpec.BooleanValue showParticles;
   public final ForgeConfigSpec.BooleanValue useWhitelist;
   public final ForgeConfigSpec.ConfigValue<List<String>> blackList;
