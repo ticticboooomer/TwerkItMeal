@@ -46,7 +46,7 @@ public class TwerkItMeal {
 
     @SubscribeEvent
     public void onSprint(TickEvent.PlayerTickEvent event) {
-      if (event.player.level.isClientSide) {
+      if (event.player.level.isClientSide || event.player.isSpectator()) {
         return;
       }
 
@@ -60,7 +60,7 @@ public class TwerkItMeal {
 
     @SubscribeEvent
     public void onTwerk(TickEvent.PlayerTickEvent event) {
-      if (event.player.level.isClientSide) {
+      if (event.player.level.isClientSide || event.player.isSpectator()) {
         return;
       }
 
