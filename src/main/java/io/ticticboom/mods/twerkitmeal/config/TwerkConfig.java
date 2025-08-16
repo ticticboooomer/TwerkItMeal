@@ -20,8 +20,8 @@ public class TwerkConfig {
     public static void bake(ModConfig config) {
         showParticles = TwerkItMeal.COMMON_CONFIG.showParticles.get();
         useWhitelist = TwerkItMeal.COMMON_CONFIG.useWhitelist.get();
-        blackList = TwerkItMeal.COMMON_CONFIG.blackList.get();
-        whitelist = TwerkItMeal.COMMON_CONFIG.whitelist.get();
+        blackList = TwerkItMeal.COMMON_CONFIG.blackList.get().stream().map(x -> (String)x).toList();
+        whitelist = TwerkItMeal.COMMON_CONFIG.whitelist.get().stream().map(x -> (String)x).toList();
         minCrouchesToApplyBonemeal = TwerkItMeal.COMMON_CONFIG.minCrouchesToApplyBonemeal.get();
         effectRadius = TwerkItMeal.COMMON_CONFIG.effectRadius.get();
         saplingsOnly = TwerkItMeal.COMMON_CONFIG.saplingsOnly.get();

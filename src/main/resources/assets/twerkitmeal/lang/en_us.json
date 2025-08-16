@@ -1,0 +1,11 @@
+{
+  "twerkitmeal.config.showParticles": "Show Particles",
+  "twerkitmeal.config.useWhitelist": "Use Whitelist",
+  "twerkitmeal.config.blacklist": "Blacklist",
+  "twerkitmeal.config.whitelist": "Whitelist",
+  "twerkitmeal.config.minCrouchesToApplyBonemeal": "Min number of crouches to apply bonemeal",
+  "twerkitmeal.config.effectRadius": "Effect Radius (around player)",
+  "twerkitmeal.config.saplingsOnly": "Saplings Only",
+  "twerkitmeal.config.sprintGrowChance": "Spring Grow Chance",
+  "twerkitmeal.config.crouchGrowChance": "Crouching Grow Chance"
+}
